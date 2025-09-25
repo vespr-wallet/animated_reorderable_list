@@ -16,15 +16,18 @@ abstract class AnimationEffect<T> {
     this.curve,
   });
 
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
     return child;
   }
 
-  Animatable<T> buildAnimation(EffectEntry entry, Duration totalDuration,
-      {required T begin, required T end}) {
-    return Tween<T>(begin: begin, end: end)
-        .chain(entry.buildAnimation(totalDuration: totalDuration));
+  Animatable<T> buildAnimation(EffectEntry entry, Duration totalDuration, {required T begin, required T end}) {
+    return Tween<T>(begin: begin, end: end).chain(entry.buildAnimation(totalDuration: totalDuration));
   }
 }
 
@@ -62,9 +65,11 @@ class EffectEntry {
   }) {
     int beginT = begin.inMicroseconds, endT = end.inMicroseconds;
     return CurveTween(
-      curve: Interval(beginT / totalDuration.inMicroseconds,
-          endT / totalDuration.inMicroseconds,
-          curve: curve ?? this.curve),
+      curve: Interval(
+        beginT / totalDuration.inMicroseconds,
+        endT / totalDuration.inMicroseconds,
+        curve: curve ?? this.curve,
+      ),
     );
   }
 

@@ -4,19 +4,16 @@ import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:flutter/material.dart';
 import 'reorderable_animated_builder.dart';
 
-typedef ItemBuilder<W extends Widget, E> = Widget Function(
-    BuildContext context, int index);
+typedef ItemBuilder<W extends Widget, E> = Widget Function(BuildContext context, int index);
 
-typedef AnimatedWidgetBuilder<W extends Widget, E> = Widget Function(
-    Widget child, Animation<double> animation);
+typedef AnimatedWidgetBuilder<W extends Widget, E> = Widget Function(Widget child, Animation<double> animation);
 
 typedef EqualityChecker<E> = bool Function(E, E);
 
 const Duration kAnimationDuration = Duration(milliseconds: 300);
 const Duration kDefaultDragStartDelay = Duration(milliseconds: 500);
 
-abstract class ReorderableAnimatedListBase<W extends Widget, E extends Object>
-    extends StatefulWidget {
+abstract class ReorderableAnimatedListBase<W extends Widget, E extends Object> extends StatefulWidget {
   final ItemBuilder<W, E>? itemBuilder;
   final List<E> items;
   final ReorderCallback? onReorder;
@@ -39,36 +36,39 @@ abstract class ReorderableAnimatedListBase<W extends Widget, E extends Object>
   final List<E> lockedItems;
   final bool enableSwap;
 
-  const ReorderableAnimatedListBase(
-      {super.key,
-      required this.items,
-      this.itemBuilder,
-      this.onReorder,
-      this.onReorderEnd,
-      this.onReorderStart,
-      this.proxyDecorator,
-      this.enterTransition,
-      this.exitTransition,
-      this.insertDuration,
-      this.removeDuration,
-      required this.scrollDirection,
-      this.sliverGridDelegate,
-      this.insertItemBuilder,
-      this.removeItemBuilder,
-      this.buildDefaultDragHandles,
-      this.longPressDraggable,
-      this.isSameItem,
-      this.dragStartDelay,
-      this.enableSwap = true,
-      required this.nonDraggableItems,
-      required this.lockedItems})
-      : assert(itemBuilder != null);
+  const ReorderableAnimatedListBase({
+    super.key,
+    required this.items,
+    this.itemBuilder,
+    this.onReorder,
+    this.onReorderEnd,
+    this.onReorderStart,
+    this.proxyDecorator,
+    this.enterTransition,
+    this.exitTransition,
+    this.insertDuration,
+    this.removeDuration,
+    required this.scrollDirection,
+    this.sliverGridDelegate,
+    this.insertItemBuilder,
+    this.removeItemBuilder,
+    this.buildDefaultDragHandles,
+    this.longPressDraggable,
+    this.isSameItem,
+    this.dragStartDelay,
+    this.enableSwap = true,
+    required this.nonDraggableItems,
+    required this.lockedItems,
+  }) : assert(itemBuilder != null);
 }
 
 abstract class ReorderableAnimatedListBaseState<
-    W extends Widget,
-    B extends ReorderableAnimatedListBase<W, E>,
-    E extends Object> extends State<B> with TickerProviderStateMixin {
+  W extends Widget,
+  B extends ReorderableAnimatedListBase<W, E>,
+  E extends Object
+>
+    extends State<B>
+    with TickerProviderStateMixin {
   late List<E> oldList;
 
   Duration _enterDuration = kAnimationDuration;
@@ -144,13 +144,11 @@ abstract class ReorderableAnimatedListBaseState<
 
   @nonVirtual
   @protected
-  bool Function(E a, E b) get isSameItem =>
-      widget.isSameItem ?? (a, b) => a == b;
+  bool Function(E a, E b) get isSameItem => widget.isSameItem ?? (a, b) => a == b;
 
   @nonVirtual
   @protected
-  Duration get dragStartDelay =>
-      widget.dragStartDelay ?? kDefaultDragStartDelay;
+  Duration get dragStartDelay => widget.dragStartDelay ?? kDefaultDragStartDelay;
 
   @nonVirtual
   @protected
@@ -158,8 +156,7 @@ abstract class ReorderableAnimatedListBaseState<
       .asMap()
       .entries
       .where((entry) {
-        final found =
-            widget.nonDraggableItems.where((e) => isSameItem(e, entry.value));
+        final found = widget.nonDraggableItems.where((e) => isSameItem(e, entry.value));
         return found.isNotEmpty;
       })
       .map((entry) => entry.key)
@@ -171,8 +168,7 @@ abstract class ReorderableAnimatedListBaseState<
       .asMap()
       .entries
       .where((entry) {
-        final items =
-            widget.lockedItems.where((e) => isSameItem(e, entry.value));
+        final items = widget.lockedItems.where((e) => isSameItem(e, entry.value));
         return items.isNotEmpty;
       })
       .map((entry) => entry.key)
@@ -203,8 +199,7 @@ abstract class ReorderableAnimatedListBaseState<
     super.didUpdateWidget(oldWidget);
   }
 
-  void addEffects(List<AnimationEffect> effects, List<EffectEntry> enteries,
-      {required bool enter}) {
+  void addEffects(List<AnimationEffect> effects, List<EffectEntry> enteries, {required bool enter}) {
     if (effects.isNotEmpty) {
       for (AnimationEffect effect in effects) {
         addEffect(effect, enteries, enter: enter);
@@ -214,26 +209,23 @@ abstract class ReorderableAnimatedListBaseState<
     }
   }
 
-  void addEffect(AnimationEffect effect, List<EffectEntry> enteries,
-      {required bool enter}) {
+  void addEffect(AnimationEffect effect, List<EffectEntry> enteries, {required bool enter}) {
     Duration zero = Duration.zero;
-    final timeForAnimation =
-        (effect.delay ?? zero) + (effect.duration ?? kAnimationDuration);
+    final timeForAnimation = (effect.delay ?? zero) + (effect.duration ?? kAnimationDuration);
     if (enter) {
-      _enterDuration =
-          timeForAnimation > _enterDuration ? timeForAnimation : _enterDuration;
+      _enterDuration = timeForAnimation > _enterDuration ? timeForAnimation : _enterDuration;
       assert(_enterDuration >= zero, "Duration can not be negative");
     } else {
-      _exitDuration =
-          timeForAnimation > _exitDuration ? timeForAnimation : _exitDuration;
+      _exitDuration = timeForAnimation > _exitDuration ? timeForAnimation : _exitDuration;
       assert(_exitDuration >= zero, "Duration can not be negative");
     }
 
     EffectEntry entry = EffectEntry(
-        animationEffect: effect,
-        delay: effect.delay ?? zero,
-        duration: effect.duration ?? kAnimationDuration,
-        curve: effect.curve ?? Curves.linear);
+      animationEffect: effect,
+      delay: effect.delay ?? zero,
+      duration: effect.duration ?? kAnimationDuration,
+      curve: effect.curve ?? Curves.linear,
+    );
 
     enteries.add(entry);
   }
@@ -244,8 +236,7 @@ abstract class ReorderableAnimatedListBaseState<
     if (oldList.length == newList.length && widget.enableSwap) {
       for (int i = 0; i < newList.length; i++) {
         if (!isSameItem(oldList[i], newList[i])) {
-          final oldIndex =
-              oldList.indexWhere((oldItem) => isSameItem(oldItem, newList[i]));
+          final oldIndex = oldList.indexWhere((oldItem) => isSameItem(oldItem, newList[i]));
 
           if (oldIndex != -1) {
             if (isSameItem(newList[oldIndex], oldList[i])) {
@@ -266,15 +257,13 @@ abstract class ReorderableAnimatedListBaseState<
 
     // Detect removed and updated items
     for (int i = oldList.length - 1; i >= 0; i--) {
-      if (newList.indexWhere((element) => isSameItem(oldList[i], element)) ==
-          -1) {
+      if (newList.indexWhere((element) => isSameItem(oldList[i], element)) == -1) {
         listKey.currentState!.removeItem(i, removeItemDuration: removeDuration);
       }
     }
     // Detect added items
     for (int i = 0; i < newList.length; i++) {
-      if (oldList.indexWhere((element) => isSameItem(newList[i], element)) ==
-          -1) {
+      if (oldList.indexWhere((element) => isSameItem(newList[i], element)) == -1) {
         listKey.currentState!.insertItem(i, insertDuration: insertDuration);
       }
     }
@@ -282,15 +271,13 @@ abstract class ReorderableAnimatedListBaseState<
 
   @nonVirtual
   @protected
-  Widget insertAnimationBuilder(
-      BuildContext context, Widget child, Animation<double> animation) {
+  Widget insertAnimationBuilder(BuildContext context, Widget child, Animation<double> animation) {
     if (widget.insertItemBuilder != null) {
       return widget.insertItemBuilder!(child, animation);
     } else {
       Widget animatedChild = child;
       for (EffectEntry entry in _enterAnimations) {
-        animatedChild = entry.animationEffect
-            .build(context, animatedChild, animation, entry, insertDuration);
+        animatedChild = entry.animationEffect.build(context, animatedChild, animation, entry, insertDuration);
       }
       return animatedChild;
     }
@@ -298,15 +285,13 @@ abstract class ReorderableAnimatedListBaseState<
 
   @nonVirtual
   @protected
-  Widget removeAnimationBuilder(
-      BuildContext context, Widget child, Animation<double> animation) {
+  Widget removeAnimationBuilder(BuildContext context, Widget child, Animation<double> animation) {
     if (widget.removeItemBuilder != null) {
       return widget.removeItemBuilder!(child, animation);
     } else {
       Widget animatedChild = child;
       for (EffectEntry entry in _exitAnimations) {
-        animatedChild = entry.animationEffect
-            .build(context, animatedChild, animation, entry, removeDuration);
+        animatedChild = entry.animationEffect.build(context, animatedChild, animation, entry, removeDuration);
       }
       return animatedChild;
     }

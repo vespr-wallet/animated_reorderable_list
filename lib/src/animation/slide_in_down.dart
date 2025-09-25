@@ -11,11 +11,19 @@ class SlideInDown extends AnimationEffect<Offset> {
   SlideInDown({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
-    final Animation<Offset> position = buildAnimation(entry, totalDuration,
-            begin: begin ?? beginValue, end: endValue)
-        .animate(animation);
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
+    final Animation<Offset> position = buildAnimation(
+      entry,
+      totalDuration,
+      begin: begin ?? beginValue,
+      end: endValue,
+    ).animate(animation);
     return ClipRect(
       clipBehavior: Clip.hardEdge,
       child: SlideTransition(

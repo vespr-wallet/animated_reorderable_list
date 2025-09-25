@@ -8,17 +8,25 @@ class SlideInRight extends AnimationEffect<Offset> {
   final Offset? end;
 
   /// A sliding animation from the right.
-  SlideInRight(
-      {super.delay, super.duration, super.curve, this.begin, this.end});
+  SlideInRight({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
-    final Animation<Offset> position = buildAnimation(entry, totalDuration,
-            begin: begin ?? beginValue, end: end ?? endValue)
-        .animate(animation);
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
+    final Animation<Offset> position = buildAnimation(
+      entry,
+      totalDuration,
+      begin: begin ?? beginValue,
+      end: end ?? endValue,
+    ).animate(animation);
     return ClipRect(
-        clipBehavior: Clip.hardEdge,
-        child: SlideTransition(position: position, child: child));
+      clipBehavior: Clip.hardEdge,
+      child: SlideTransition(position: position, child: child),
+    );
   }
 }

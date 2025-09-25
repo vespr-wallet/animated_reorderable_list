@@ -409,19 +409,21 @@ class AnimatedReorderableListView<E extends Object> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static AnimatedReorderableListViewState of(BuildContext context) {
-    final AnimatedReorderableListViewState? result =
-        context.findAncestorStateOfType<AnimatedReorderableListViewState>();
+    final AnimatedReorderableListViewState? result = context
+        .findAncestorStateOfType<AnimatedReorderableListViewState>();
     assert(() {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              'AnimatedReorderableListViewState.of() called with a context that does not contain a AnimatedReorderableListViewState.'),
+            'AnimatedReorderableListViewState.of() called with a context that does not contain a AnimatedReorderableListViewState.',
+          ),
           ErrorDescription(
             'No AnimatedReorderableListViewState ancestor could be found starting from the context that was passed to AnimatedReorderableListViewState.of().',
           ),
           ErrorHint(
-              'This can happen when the context provided is from the same StatefulWidget that '
-              'built the AnimatedReorderableListViewState. '),
+            'This can happen when the context provided is from the same StatefulWidget that '
+            'built the AnimatedReorderableListViewState. ',
+          ),
           context.describeElement('The context used was'),
         ]);
       }
@@ -445,53 +447,52 @@ class AnimatedReorderableListView<E extends Object> extends StatefulWidget {
   }
 
   @override
-  State<AnimatedReorderableListView<E>> createState() =>
-      AnimatedReorderableListViewState();
+  State<AnimatedReorderableListView<E>> createState() => AnimatedReorderableListViewState();
 }
 
-class AnimatedReorderableListViewState<E extends Object>
-    extends State<AnimatedReorderableListView<E>> {
+class AnimatedReorderableListViewState<E extends Object> extends State<AnimatedReorderableListView<E>> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-        scrollDirection: widget.scrollDirection,
-        reverse: widget.reverse,
-        controller: widget.controller,
-        primary: widget.primary,
-        physics: widget.physics,
-        scrollBehavior: widget.scrollBehavior,
-        restorationId: widget.restorationId,
-        keyboardDismissBehavior: widget.keyboardDismissBehavior,
-        dragStartBehavior: widget.dragStartBehavior,
-        clipBehavior: widget.clipBehavior,
-        shrinkWrap: widget.shrinkWrap,
-        slivers: [
-          SliverPadding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            sliver: ReorderableAnimatedListImpl(
-              items: widget.items,
-              itemBuilder: widget.itemBuilder,
-              enterTransition: widget.enterTransition,
-              exitTransition: widget.exitTransition,
-              insertDuration: widget.insertDuration,
-              removeDuration: widget.removeDuration,
-              onReorder: widget.onReorder,
-              onReorderStart: widget.onReorderStart,
-              onReorderEnd: widget.onReorderEnd,
-              proxyDecorator: widget.proxyDecorator,
-              buildDefaultDragHandles: widget.buildDefaultDragHandles,
-              scrollDirection: widget.scrollDirection,
-              insertItemBuilder: widget.insertItemBuilder,
-              removeItemBuilder: widget.removeItemBuilder,
-              //ignore: deprecated_member_use_from_same_package
-              longPressDraggable: widget.longPressDraggable,
-              isSameItem: widget.isSameItem,
-              dragStartDelay: widget.dragStartDelay,
-              nonDraggableItems: widget.nonDraggableItems,
-              lockedItems: widget.lockedItems,
-              enableSwap: widget.enableSwap,
-            ),
+      scrollDirection: widget.scrollDirection,
+      reverse: widget.reverse,
+      controller: widget.controller,
+      primary: widget.primary,
+      physics: widget.physics,
+      scrollBehavior: widget.scrollBehavior,
+      restorationId: widget.restorationId,
+      keyboardDismissBehavior: widget.keyboardDismissBehavior,
+      dragStartBehavior: widget.dragStartBehavior,
+      clipBehavior: widget.clipBehavior,
+      shrinkWrap: widget.shrinkWrap,
+      slivers: [
+        SliverPadding(
+          padding: widget.padding ?? EdgeInsets.zero,
+          sliver: ReorderableAnimatedListImpl(
+            items: widget.items,
+            itemBuilder: widget.itemBuilder,
+            enterTransition: widget.enterTransition,
+            exitTransition: widget.exitTransition,
+            insertDuration: widget.insertDuration,
+            removeDuration: widget.removeDuration,
+            onReorder: widget.onReorder,
+            onReorderStart: widget.onReorderStart,
+            onReorderEnd: widget.onReorderEnd,
+            proxyDecorator: widget.proxyDecorator,
+            buildDefaultDragHandles: widget.buildDefaultDragHandles,
+            scrollDirection: widget.scrollDirection,
+            insertItemBuilder: widget.insertItemBuilder,
+            removeItemBuilder: widget.removeItemBuilder,
+            //ignore: deprecated_member_use_from_same_package
+            longPressDraggable: widget.longPressDraggable,
+            isSameItem: widget.isSameItem,
+            dragStartDelay: widget.dragStartDelay,
+            nonDraggableItems: widget.nonDraggableItems,
+            lockedItems: widget.lockedItems,
+            enableSwap: widget.enableSwap,
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }

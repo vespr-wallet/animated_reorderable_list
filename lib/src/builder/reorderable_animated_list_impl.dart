@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'reorderable_animated_builder.dart';
 import 'reorderable_animated_list_base.dart';
 
-class ReorderableAnimatedListImpl<E extends Object>
-    extends ReorderableAnimatedListBase<Widget, E> {
+class ReorderableAnimatedListImpl<E extends Object> extends ReorderableAnimatedListBase<Widget, E> {
   const ReorderableAnimatedListImpl({
     super.key,
     required super.items,
@@ -55,13 +54,11 @@ class ReorderableAnimatedListImpl<E extends Object>
   });
 
   @override
-  ReorderableAnimatedListImplState<E> createState() =>
-      ReorderableAnimatedListImplState<E>();
+  ReorderableAnimatedListImplState<E> createState() => ReorderableAnimatedListImplState<E>();
 }
 
 class ReorderableAnimatedListImplState<E extends Object>
-    extends ReorderableAnimatedListBaseState<Widget,
-        ReorderableAnimatedListImpl<E>, E> {
+    extends ReorderableAnimatedListBaseState<Widget, ReorderableAnimatedListImpl<E>, E> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));

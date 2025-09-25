@@ -13,11 +13,19 @@ class FlipInY extends AnimationEffect<double> {
   FlipInY({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
-    final Animation<double> rotation = buildAnimation(entry, totalDuration,
-            begin: begin ?? beginValue, end: endValue)
-        .animate(animation);
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
+    final Animation<double> rotation = buildAnimation(
+      entry,
+      totalDuration,
+      begin: begin ?? beginValue,
+      end: endValue,
+    ).animate(animation);
     return AnimatedBuilder(
       animation: rotation,
       builder: (BuildContext context, Widget? child) {

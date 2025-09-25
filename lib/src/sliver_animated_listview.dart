@@ -253,12 +253,15 @@ class SliverAnimatedListView<E extends Object> extends StatefulWidget {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              'SliverAnimatedListViewState.of() called with a context that does not contain a SliverAnimatedListViewState.'),
+            'SliverAnimatedListViewState.of() called with a context that does not contain a SliverAnimatedListViewState.',
+          ),
           ErrorDescription(
             'No SliverAnimatedListViewState ancestor could be found starting from the context that was passed to SliverAnimatedListViewState.of().',
           ),
-          ErrorHint('This can happen when the context provided is from the same StatefulWidget that '
-              'built the SliverAnimatedListViewState. '),
+          ErrorHint(
+            'This can happen when the context provided is from the same StatefulWidget that '
+            'built the SliverAnimatedListViewState. ',
+          ),
           context.describeElement('The context used was'),
         ]);
       }

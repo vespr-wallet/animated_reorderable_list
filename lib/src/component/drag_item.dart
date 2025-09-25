@@ -1,7 +1,6 @@
 part of '../builder/reorderable_animated_builder.dart';
 
-typedef _DragItemUpdate = void Function(
-    _DragInfo item, Offset position, Offset delta);
+typedef _DragItemUpdate = void Function(_DragInfo item, Offset position, Offset delta);
 typedef _DragItemCallback = void Function(_DragInfo item);
 
 class _DragInfo extends Drag {
@@ -37,8 +36,7 @@ class _DragInfo extends Drag {
     this.proxyDecorator,
     required this.tickerProvider,
   }) {
-    final RenderBox itemRenderBox =
-        item.context.findRenderObject()! as RenderBox;
+    final RenderBox itemRenderBox = item.context.findRenderObject()! as RenderBox;
     listState = item.listState;
     index = item.index;
     child = item.widget.child;
@@ -55,8 +53,7 @@ class _DragInfo extends Drag {
   }
 
   void startDrag() {
-    _proxyAnimation = AnimationController(
-        vsync: tickerProvider, duration: const Duration(milliseconds: 250))
+    _proxyAnimation = AnimationController(vsync: tickerProvider, duration: const Duration(milliseconds: 250))
       ..addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
           _dropCompleted();
@@ -67,9 +64,7 @@ class _DragInfo extends Drag {
 
   @override
   void update(DragUpdateDetails details) {
-    final Offset delta = !gridView
-        ? _restrictAxis(details.delta, scrollDirection)
-        : details.delta;
+    final Offset delta = !gridView ? _restrictAxis(details.delta, scrollDirection) : details.delta;
     dragPosition += delta;
     onUpdate?.call(this, dragPosition, details.delta);
   }
@@ -94,14 +89,17 @@ class _DragInfo extends Drag {
   }
 
   Widget createProxy(BuildContext context) {
-    return capturedThemes.wrap(_DragItemProxy(
+    return capturedThemes.wrap(
+      _DragItemProxy(
         listState: listState,
         index: index,
         position: dragPosition - dragOffset - _overlayOrigin(context),
         size: itemSize,
         animation: _proxyAnimation!,
         proxyDecorator: proxyDecorator,
-        child: child));
+        child: child,
+      ),
+    );
   }
 }
 
@@ -124,8 +122,7 @@ Offset _restrictAxis(Offset offset, Axis scrollDirection) {
 }
 
 Offset _overlayOrigin(BuildContext context) {
-  final OverlayState overlay =
-      Overlay.of(context, debugRequiredFor: context.widget);
+  final OverlayState overlay = Overlay.of(context, debugRequiredFor: context.widget);
   final RenderBox overlayBox = overlay.context.findRenderObject()! as RenderBox;
   return overlayBox.localToGlobal(Offset.zero);
 }
@@ -139,43 +136,46 @@ class _DragItemProxy extends StatelessWidget {
   final AnimationController animation;
   final ReorderItemProxyDecorator? proxyDecorator;
 
-  const _DragItemProxy(
-      {required this.listState,
-      required this.index,
-      required this.child,
-      required this.position,
-      required this.size,
-      required this.animation,
-      required this.proxyDecorator});
+  const _DragItemProxy({
+    required this.listState,
+    required this.index,
+    required this.child,
+    required this.position,
+    required this.size,
+    required this.animation,
+    required this.proxyDecorator,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final Widget proxyChild =
-        proxyDecorator?.call(child, index, animation.view) ?? child;
+    final Widget proxyChild = proxyDecorator?.call(child, index, animation.view) ?? child;
     final Offset overlayOrigin = _overlayOrigin(context);
     return MediaQuery(
-        data: MediaQuery.of(context).removePadding(removeTop: true),
-        child: AnimatedBuilder(
-          animation: animation,
-          builder: (BuildContext context, Widget? child) {
-            Offset effectivePosition = position;
-            final Offset? dropPosition = listState._finalDropPosition;
-            if (dropPosition != null) {
-              effectivePosition = Offset.lerp(
-                  dropPosition - overlayOrigin,
-                  effectivePosition,
-                  Curves.easeOut.transform(animation.value))!;
-            }
-            return Positioned(
-                left: effectivePosition.dx,
-                top: effectivePosition.dy,
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: child,
-                ));
-          },
-          child: proxyChild,
-        ));
+      data: MediaQuery.of(context).removePadding(removeTop: true),
+      child: AnimatedBuilder(
+        animation: animation,
+        builder: (BuildContext context, Widget? child) {
+          Offset effectivePosition = position;
+          final Offset? dropPosition = listState._finalDropPosition;
+          if (dropPosition != null) {
+            effectivePosition = Offset.lerp(
+              dropPosition - overlayOrigin,
+              effectivePosition,
+              Curves.easeOut.transform(animation.value),
+            )!;
+          }
+          return Positioned(
+            left: effectivePosition.dx,
+            top: effectivePosition.dy,
+            child: SizedBox(
+              width: size.width,
+              height: size.height,
+              child: child,
+            ),
+          );
+        },
+        child: proxyChild,
+      ),
+    );
   }
 }

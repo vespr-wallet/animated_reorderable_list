@@ -317,19 +317,20 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static AnimatedListViewState of(BuildContext context) {
-    final AnimatedListViewState? result =
-        context.findAncestorStateOfType<AnimatedListViewState>();
+    final AnimatedListViewState? result = context.findAncestorStateOfType<AnimatedListViewState>();
     assert(() {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              'AnimatedListViewState.of() called with a context that does not contain a AnimatedListViewState.'),
+            'AnimatedListViewState.of() called with a context that does not contain a AnimatedListViewState.',
+          ),
           ErrorDescription(
             'No AnimatedListViewState ancestor could be found starting from the context that was passed to AnimatedListViewState.of().',
           ),
           ErrorHint(
-              'This can happen when the context provided is from the same StatefulWidget that '
-              'built the AnimatedListViewState. '),
+            'This can happen when the context provided is from the same StatefulWidget that '
+            'built the AnimatedListViewState. ',
+          ),
           context.describeElement('The context used was'),
         ]);
       }
@@ -356,39 +357,39 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   State<AnimatedListView<E>> createState() => AnimatedListViewState();
 }
 
-class AnimatedListViewState<E extends Object>
-    extends State<AnimatedListView<E>> {
+class AnimatedListViewState<E extends Object> extends State<AnimatedListView<E>> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-        scrollDirection: widget.scrollDirection,
-        reverse: widget.reverse,
-        controller: widget.controller,
-        primary: widget.primary,
-        physics: widget.physics,
-        scrollBehavior: widget.scrollBehavior,
-        restorationId: widget.restorationId,
-        keyboardDismissBehavior: widget.keyboardDismissBehavior,
-        dragStartBehavior: widget.dragStartBehavior,
-        clipBehavior: widget.clipBehavior,
-        shrinkWrap: widget.shrinkWrap,
-        slivers: [
-          SliverPadding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            sliver: ReorderableAnimatedListImpl(
-              items: widget.items,
-              itemBuilder: widget.itemBuilder,
-              enterTransition: widget.enterTransition,
-              exitTransition: widget.exitTransition,
-              insertDuration: widget.insertDuration,
-              removeDuration: widget.removeDuration,
-              scrollDirection: widget.scrollDirection,
-              insertItemBuilder: widget.insertItemBuilder,
-              removeItemBuilder: widget.removeItemBuilder,
-              isSameItem: widget.isSameItem,
-              enableSwap: widget.enableSwap,
-            ),
+      scrollDirection: widget.scrollDirection,
+      reverse: widget.reverse,
+      controller: widget.controller,
+      primary: widget.primary,
+      physics: widget.physics,
+      scrollBehavior: widget.scrollBehavior,
+      restorationId: widget.restorationId,
+      keyboardDismissBehavior: widget.keyboardDismissBehavior,
+      dragStartBehavior: widget.dragStartBehavior,
+      clipBehavior: widget.clipBehavior,
+      shrinkWrap: widget.shrinkWrap,
+      slivers: [
+        SliverPadding(
+          padding: widget.padding ?? EdgeInsets.zero,
+          sliver: ReorderableAnimatedListImpl(
+            items: widget.items,
+            itemBuilder: widget.itemBuilder,
+            enterTransition: widget.enterTransition,
+            exitTransition: widget.exitTransition,
+            insertDuration: widget.insertDuration,
+            removeDuration: widget.removeDuration,
+            scrollDirection: widget.scrollDirection,
+            insertItemBuilder: widget.insertItemBuilder,
+            removeItemBuilder: widget.removeItemBuilder,
+            isSameItem: widget.isSameItem,
+            enableSwap: widget.enableSwap,
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }

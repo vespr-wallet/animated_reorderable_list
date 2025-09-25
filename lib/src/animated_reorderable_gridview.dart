@@ -296,7 +296,6 @@ class AnimatedReorderableGridView<E extends Object> extends StatefulWidget {
   final AnimatedWidgetBuilder? removeItemBuilder;
 
   @Deprecated("Use [dragStartDelay] instead.")
-
   /// Set [dragStartDelay] to [Duration.zero] to start the drag operation immediately.
   final bool longPressDraggable;
 
@@ -348,39 +347,40 @@ class AnimatedReorderableGridView<E extends Object> extends StatefulWidget {
 
   /// Creates a [AnimatedReorderableGridView] that enables users to interactively reorder items through dragging,
   /// with animated insertion and removal of items.
-  const AnimatedReorderableGridView(
-      {super.key,
-      required this.items,
-      required this.itemBuilder,
-      required this.sliverGridDelegate,
-      required this.onReorder,
-      this.enterTransition,
-      this.exitTransition,
-      this.insertDuration,
-      this.removeDuration,
-      this.onReorderStart,
-      this.onReorderEnd,
-      this.proxyDecorator,
-      this.padding,
-      this.scrollDirection = Axis.vertical,
-      this.reverse = false,
-      this.controller,
-      this.primary,
-      this.physics,
-      this.scrollBehavior,
-      this.restorationId,
-      this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
-      this.dragStartBehavior = DragStartBehavior.start,
-      this.clipBehavior = Clip.hardEdge,
-      this.longPressDraggable = true,
-      this.shrinkWrap = false,
-      this.insertItemBuilder,
-      this.removeItemBuilder,
-      required this.isSameItem,
-      this.dragStartDelay = const Duration(milliseconds: 500),
-      this.nonDraggableItems = const [],
-      this.lockedItems = const [],
-      this.enableSwap = true});
+  const AnimatedReorderableGridView({
+    super.key,
+    required this.items,
+    required this.itemBuilder,
+    required this.sliverGridDelegate,
+    required this.onReorder,
+    this.enterTransition,
+    this.exitTransition,
+    this.insertDuration,
+    this.removeDuration,
+    this.onReorderStart,
+    this.onReorderEnd,
+    this.proxyDecorator,
+    this.padding,
+    this.scrollDirection = Axis.vertical,
+    this.reverse = false,
+    this.controller,
+    this.primary,
+    this.physics,
+    this.scrollBehavior,
+    this.restorationId,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.clipBehavior = Clip.hardEdge,
+    this.longPressDraggable = true,
+    this.shrinkWrap = false,
+    this.insertItemBuilder,
+    this.removeItemBuilder,
+    required this.isSameItem,
+    this.dragStartDelay = const Duration(milliseconds: 500),
+    this.nonDraggableItems = const [],
+    this.lockedItems = const [],
+    this.enableSwap = true,
+  });
 
   /// The state from the closest instance of this class that encloses the given
   /// context.
@@ -390,19 +390,21 @@ class AnimatedReorderableGridView<E extends Object> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static AnimatedReorderableGridViewState of(BuildContext context) {
-    final AnimatedReorderableGridViewState? result =
-        context.findAncestorStateOfType<AnimatedReorderableGridViewState>();
+    final AnimatedReorderableGridViewState? result = context
+        .findAncestorStateOfType<AnimatedReorderableGridViewState>();
     assert(() {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              'AnimatedReorderableGridViewState.of() called with a context that does not contain a AnimatedReorderableGridViewState.'),
+            'AnimatedReorderableGridViewState.of() called with a context that does not contain a AnimatedReorderableGridViewState.',
+          ),
           ErrorDescription(
             'No AnimatedReorderableGridViewState ancestor could be found starting from the context that was passed to AnimatedReorderableGridViewState.of().',
           ),
           ErrorHint(
-              'This can happen when the context provided is from the same StatefulWidget that '
-              'built the AnimatedReorderableGridViewState. '),
+            'This can happen when the context provided is from the same StatefulWidget that '
+            'built the AnimatedReorderableGridViewState. ',
+          ),
           context.describeElement('The context used was'),
         ]);
       }
@@ -426,53 +428,52 @@ class AnimatedReorderableGridView<E extends Object> extends StatefulWidget {
   }
 
   @override
-  State<AnimatedReorderableGridView<E>> createState() =>
-      AnimatedReorderableGridViewState();
+  State<AnimatedReorderableGridView<E>> createState() => AnimatedReorderableGridViewState();
 }
 
-class AnimatedReorderableGridViewState<E extends Object>
-    extends State<AnimatedReorderableGridView<E>> {
+class AnimatedReorderableGridViewState<E extends Object> extends State<AnimatedReorderableGridView<E>> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-        scrollDirection: widget.scrollDirection,
-        reverse: widget.reverse,
-        controller: widget.controller,
-        primary: widget.primary,
-        physics: widget.physics,
-        scrollBehavior: widget.scrollBehavior,
-        restorationId: widget.restorationId,
-        keyboardDismissBehavior: widget.keyboardDismissBehavior,
-        dragStartBehavior: widget.dragStartBehavior,
-        clipBehavior: widget.clipBehavior,
-        shrinkWrap: widget.shrinkWrap,
-        slivers: [
-          SliverPadding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            sliver: ReorderableAnimatedListImpl.grid(
-              items: widget.items,
-              itemBuilder: widget.itemBuilder,
-              sliverGridDelegate: widget.sliverGridDelegate,
-              insertDuration: widget.insertDuration,
-              removeDuration: widget.removeDuration,
-              enterTransition: widget.enterTransition,
-              exitTransition: widget.exitTransition,
-              onReorder: widget.onReorder,
-              onReorderStart: widget.onReorderStart,
-              onReorderEnd: widget.onReorderEnd,
-              proxyDecorator: widget.proxyDecorator,
-              scrollDirection: widget.scrollDirection,
-              insertItemBuilder: widget.insertItemBuilder,
-              removeItemBuilder: widget.removeItemBuilder,
-              //ignore: deprecated_member_use_from_same_package
-              longPressDraggable: widget.longPressDraggable,
-              isSameItem: widget.isSameItem,
-              dragStartDelay: widget.dragStartDelay,
-              nonDraggableItems: widget.nonDraggableItems,
-              lockedItems: widget.lockedItems,
-              enableSwap: widget.enableSwap,
-            ),
+      scrollDirection: widget.scrollDirection,
+      reverse: widget.reverse,
+      controller: widget.controller,
+      primary: widget.primary,
+      physics: widget.physics,
+      scrollBehavior: widget.scrollBehavior,
+      restorationId: widget.restorationId,
+      keyboardDismissBehavior: widget.keyboardDismissBehavior,
+      dragStartBehavior: widget.dragStartBehavior,
+      clipBehavior: widget.clipBehavior,
+      shrinkWrap: widget.shrinkWrap,
+      slivers: [
+        SliverPadding(
+          padding: widget.padding ?? EdgeInsets.zero,
+          sliver: ReorderableAnimatedListImpl.grid(
+            items: widget.items,
+            itemBuilder: widget.itemBuilder,
+            sliverGridDelegate: widget.sliverGridDelegate,
+            insertDuration: widget.insertDuration,
+            removeDuration: widget.removeDuration,
+            enterTransition: widget.enterTransition,
+            exitTransition: widget.exitTransition,
+            onReorder: widget.onReorder,
+            onReorderStart: widget.onReorderStart,
+            onReorderEnd: widget.onReorderEnd,
+            proxyDecorator: widget.proxyDecorator,
+            scrollDirection: widget.scrollDirection,
+            insertItemBuilder: widget.insertItemBuilder,
+            removeItemBuilder: widget.removeItemBuilder,
+            //ignore: deprecated_member_use_from_same_package
+            longPressDraggable: widget.longPressDraggable,
+            isSameItem: widget.isSameItem,
+            dragStartDelay: widget.dragStartDelay,
+            nonDraggableItems: widget.nonDraggableItems,
+            lockedItems: widget.lockedItems,
+            enableSwap: widget.enableSwap,
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }

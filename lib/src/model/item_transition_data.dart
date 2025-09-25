@@ -6,19 +6,20 @@ class ItemTransitionData {
   final bool visible;
   final bool animate;
 
-  ItemTransitionData(
-      {this.startOffset = Offset.zero,
-      this.endOffset = Offset.zero,
-      this.visible = true,
-      this.animate = false});
+  ItemTransitionData({
+    this.startOffset = Offset.zero,
+    this.endOffset = Offset.zero,
+    this.visible = true,
+    this.animate = false,
+  });
 
-  ItemTransitionData copyWith(
-      {Offset? startOffset, Offset? endOffset, bool? visible, bool? animate}) {
+  ItemTransitionData copyWith({Offset? startOffset, Offset? endOffset, bool? visible, bool? animate}) {
     return ItemTransitionData(
-        startOffset: startOffset ?? this.startOffset,
-        endOffset: endOffset ?? this.endOffset,
-        visible: visible ?? this.visible,
-        animate: animate ?? this.animate);
+      startOffset: startOffset ?? this.startOffset,
+      endOffset: endOffset ?? this.endOffset,
+      visible: visible ?? this.visible,
+      animate: animate ?? this.animate,
+    );
   }
 
   @override

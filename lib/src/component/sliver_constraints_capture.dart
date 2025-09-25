@@ -43,8 +43,7 @@ class SliverConstraintsCapture extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, RenderSliverConstraintsCapture renderObject) {
+  void updateRenderObject(BuildContext context, RenderSliverConstraintsCapture renderObject) {
     renderObject.onConstraintsChanged = onConstraintsChanged;
   }
 }

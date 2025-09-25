@@ -286,31 +286,32 @@ class AnimatedGridView<E extends Object> extends StatefulWidget {
   final bool enableSwap;
 
   /// Creates a [AnimatedGridView] that animates insertion and removal of the item.
-  const AnimatedGridView(
-      {super.key,
-      required this.items,
-      required this.itemBuilder,
-      required this.sliverGridDelegate,
-      this.enterTransition,
-      this.exitTransition,
-      this.insertDuration,
-      this.removeDuration,
-      this.padding,
-      this.scrollDirection = Axis.vertical,
-      this.reverse = false,
-      this.controller,
-      this.primary,
-      this.physics,
-      this.scrollBehavior,
-      this.restorationId,
-      this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
-      this.dragStartBehavior = DragStartBehavior.start,
-      this.clipBehavior = Clip.hardEdge,
-      this.insertItemBuilder,
-      this.removeItemBuilder,
-      this.shrinkWrap = false,
-      required this.isSameItem,
-      this.enableSwap = true});
+  const AnimatedGridView({
+    super.key,
+    required this.items,
+    required this.itemBuilder,
+    required this.sliverGridDelegate,
+    this.enterTransition,
+    this.exitTransition,
+    this.insertDuration,
+    this.removeDuration,
+    this.padding,
+    this.scrollDirection = Axis.vertical,
+    this.reverse = false,
+    this.controller,
+    this.primary,
+    this.physics,
+    this.scrollBehavior,
+    this.restorationId,
+    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.clipBehavior = Clip.hardEdge,
+    this.insertItemBuilder,
+    this.removeItemBuilder,
+    this.shrinkWrap = false,
+    required this.isSameItem,
+    this.enableSwap = true,
+  });
 
   /// The state from the closest instance of this class that encloses the given
   /// context.
@@ -320,19 +321,20 @@ class AnimatedGridView<E extends Object> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static AnimatedGridViewState of(BuildContext context) {
-    final AnimatedGridViewState? result =
-        context.findAncestorStateOfType<AnimatedGridViewState>();
+    final AnimatedGridViewState? result = context.findAncestorStateOfType<AnimatedGridViewState>();
     assert(() {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              'AnimatedGridViewState.of() called with a context that does not contain a AnimatedGridViewState.'),
+            'AnimatedGridViewState.of() called with a context that does not contain a AnimatedGridViewState.',
+          ),
           ErrorDescription(
             'No AnimatedGridViewState ancestor could be found starting from the context that was passed to AnimatedGridViewState.of().',
           ),
           ErrorHint(
-              'This can happen when the context provided is from the same StatefulWidget that '
-              'built the AnimatedGridViewState. '),
+            'This can happen when the context provided is from the same StatefulWidget that '
+            'built the AnimatedGridViewState. ',
+          ),
           context.describeElement('The context used was'),
         ]);
       }
@@ -359,39 +361,40 @@ class AnimatedGridView<E extends Object> extends StatefulWidget {
   State<AnimatedGridView<E>> createState() => AnimatedGridViewState();
 }
 
-class AnimatedGridViewState<E extends Object>
-    extends State<AnimatedGridView<E>> {
+class AnimatedGridViewState<E extends Object> extends State<AnimatedGridView<E>> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-        scrollDirection: widget.scrollDirection,
-        reverse: widget.reverse,
-        controller: widget.controller,
-        primary: widget.primary,
-        physics: widget.physics,
-        scrollBehavior: widget.scrollBehavior,
-        restorationId: widget.restorationId,
-        keyboardDismissBehavior: widget.keyboardDismissBehavior,
-        dragStartBehavior: widget.dragStartBehavior,
-        clipBehavior: widget.clipBehavior,
-        shrinkWrap: widget.shrinkWrap,
-        slivers: [
-          SliverPadding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            sliver: ReorderableAnimatedListImpl.grid(
-                items: widget.items,
-                itemBuilder: widget.itemBuilder,
-                sliverGridDelegate: widget.sliverGridDelegate,
-                insertDuration: widget.insertDuration,
-                removeDuration: widget.removeDuration,
-                enterTransition: widget.enterTransition,
-                exitTransition: widget.exitTransition,
-                scrollDirection: widget.scrollDirection,
-                insertItemBuilder: widget.insertItemBuilder,
-                removeItemBuilder: widget.removeItemBuilder,
-                isSameItem: widget.isSameItem,
-                enableSwap: widget.enableSwap),
+      scrollDirection: widget.scrollDirection,
+      reverse: widget.reverse,
+      controller: widget.controller,
+      primary: widget.primary,
+      physics: widget.physics,
+      scrollBehavior: widget.scrollBehavior,
+      restorationId: widget.restorationId,
+      keyboardDismissBehavior: widget.keyboardDismissBehavior,
+      dragStartBehavior: widget.dragStartBehavior,
+      clipBehavior: widget.clipBehavior,
+      shrinkWrap: widget.shrinkWrap,
+      slivers: [
+        SliverPadding(
+          padding: widget.padding ?? EdgeInsets.zero,
+          sliver: ReorderableAnimatedListImpl.grid(
+            items: widget.items,
+            itemBuilder: widget.itemBuilder,
+            sliverGridDelegate: widget.sliverGridDelegate,
+            insertDuration: widget.insertDuration,
+            removeDuration: widget.removeDuration,
+            enterTransition: widget.enterTransition,
+            exitTransition: widget.exitTransition,
+            scrollDirection: widget.scrollDirection,
+            insertItemBuilder: widget.insertItemBuilder,
+            removeItemBuilder: widget.removeItemBuilder,
+            isSameItem: widget.isSameItem,
+            enableSwap: widget.enableSwap,
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }

@@ -8,15 +8,22 @@ class ScaleInRight extends AnimationEffect<double> {
   final double? end;
 
   /// A scaling effect originating from the right.
-  ScaleInRight(
-      {super.delay, super.duration, super.curve, this.begin, this.end});
+  ScaleInRight({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
-    final Animation<double> scale = buildAnimation(entry, totalDuration,
-            begin: begin ?? beginValue, end: endValue)
-        .animate(animation);
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
+    final Animation<double> scale = buildAnimation(
+      entry,
+      totalDuration,
+      begin: begin ?? beginValue,
+      end: endValue,
+    ).animate(animation);
     return ScaleTransition(
       alignment: Alignment.centerRight,
       scale: scale,

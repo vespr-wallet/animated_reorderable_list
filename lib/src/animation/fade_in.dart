@@ -11,14 +11,19 @@ class FadeIn extends AnimationEffect<double> {
   FadeIn({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
     final Animation<double> opacity = buildAnimation(
-            entry,
-            begin: begin ?? beginValue,
-            end: end ?? endValue,
-            totalDuration)
-        .animate(animation);
+      entry,
+      begin: begin ?? beginValue,
+      end: end ?? endValue,
+      totalDuration,
+    ).animate(animation);
     return FadeTransition(opacity: opacity, child: child);
   }
 }

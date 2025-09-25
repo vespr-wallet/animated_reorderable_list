@@ -13,20 +13,29 @@ class FlipInX extends AnimationEffect<double> {
   FlipInX({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
-    final Animation<double> rotation = buildAnimation(entry, totalDuration,
-            begin: begin ?? beginValue, end: endValue)
-        .animate(animation);
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
+    final Animation<double> rotation = buildAnimation(
+      entry,
+      totalDuration,
+      begin: begin ?? beginValue,
+      end: endValue,
+    ).animate(animation);
     return AnimatedBuilder(
-        animation: animation,
-        builder: (BuildContext context, Widget? child) {
-          return Transform(
-            transform: Matrix4.rotationX(rotation.value),
-            alignment: Alignment.center,
-            child: child,
-          );
-        },
-        child: child);
+      animation: animation,
+      builder: (BuildContext context, Widget? child) {
+        return Transform(
+          transform: Matrix4.rotationX(rotation.value),
+          alignment: Alignment.center,
+          child: child,
+        );
+      },
+      child: child,
+    );
   }
 }

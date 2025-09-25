@@ -32,9 +32,7 @@ class ReorderableGridDragStartListener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Listener(
-      onPointerDown: enabled
-          ? (PointerDownEvent event) => _startDragging(context, event)
-          : null,
+      onPointerDown: enabled ? (PointerDownEvent event) => _startDragging(context, event) : null,
       child: child,
     );
   }
@@ -50,11 +48,9 @@ class ReorderableGridDragStartListener extends StatelessWidget {
   }
 
   void _startDragging(BuildContext context, PointerDownEvent event) {
-    final DeviceGestureSettings? gestureSettings =
-        MediaQuery.maybeGestureSettingsOf(context);
+    final DeviceGestureSettings? gestureSettings = MediaQuery.maybeGestureSettingsOf(context);
 
-    final ReorderableAnimatedBuilderState? list =
-        ReorderableAnimatedBuilder.maybeOf(context);
+    final ReorderableAnimatedBuilderState? list = ReorderableAnimatedBuilder.maybeOf(context);
     list?.startItemDragReorder(
       index: index,
       event: event,
@@ -77,8 +73,7 @@ class ReorderableGridDragStartListener extends StatelessWidget {
 ///    its items.
 ///  * [ReorderableGridView], a material design grid that allows the user to
 ///    reorder its items.
-class ReorderableGridDelayedDragStartListener
-    extends ReorderableGridDragStartListener {
+class ReorderableGridDelayedDragStartListener extends ReorderableGridDragStartListener {
   final Duration dragStartDelay;
 
   /// Creates a listener for an drag following a long press event over the
@@ -96,7 +91,6 @@ class ReorderableGridDelayedDragStartListener
 
   @override
   MultiDragGestureRecognizer createRecognizer() {
-    return DelayedMultiDragGestureRecognizer(
-        delay: dragStartDelay, debugOwner: this);
+    return DelayedMultiDragGestureRecognizer(delay: dragStartDelay, debugOwner: this);
   }
 }

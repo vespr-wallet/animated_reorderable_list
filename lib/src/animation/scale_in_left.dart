@@ -11,11 +11,19 @@ class ScaleInLeft extends AnimationEffect<double> {
   ScaleInLeft({super.delay, super.duration, super.curve, this.begin, this.end});
 
   @override
-  Widget build(BuildContext context, Widget child, Animation<double> animation,
-      EffectEntry entry, Duration totalDuration) {
-    final Animation<double> scale = buildAnimation(entry, totalDuration,
-            begin: begin ?? beginValue, end: endValue)
-        .animate(animation);
+  Widget build(
+    BuildContext context,
+    Widget child,
+    Animation<double> animation,
+    EffectEntry entry,
+    Duration totalDuration,
+  ) {
+    final Animation<double> scale = buildAnimation(
+      entry,
+      totalDuration,
+      begin: begin ?? beginValue,
+      end: endValue,
+    ).animate(animation);
     return ScaleTransition(
       alignment: Alignment.centerLeft,
       scale: scale,

@@ -17,12 +17,10 @@ class ReorderableAnimatedContent extends StatefulWidget {
   });
 
   @override
-  State<ReorderableAnimatedContent> createState() =>
-      ReorderableAnimatedContentState();
+  State<ReorderableAnimatedContent> createState() => ReorderableAnimatedContentState();
 }
 
-class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent>
-    with SingleTickerProviderStateMixin {
+class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent> with SingleTickerProviderStateMixin {
   late ReorderableAnimatedBuilderState listState;
 
   Offset _targetOffset = Offset.zero;
@@ -87,25 +85,25 @@ class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent>
 
   void _updateAnimationTranslation() {
     if (widget.transitionData.animate) {
-      Offset offsetDiff = (widget.transitionData.startOffset + offset) -
-          widget.transitionData.endOffset;
+      Offset offsetDiff = (widget.transitionData.startOffset + offset) - widget.transitionData.endOffset;
       _startOffset = offsetDiff;
       if (offsetDiff.dx != 0 || offsetDiff.dy != 0) {
         if (_offsetAnimation == null) {
-          _offsetAnimation = AnimationController(
-            vsync: listState,
-            duration: kAnimationDuration,
-          )
-            ..addListener(rebuild)
-            ..addStatusListener((AnimationStatus status) {
-              if (status == AnimationStatus.completed) {
-                widget.updateItemPosition?.call();
-                _startOffset = _targetOffset;
-                _offsetAnimation!.dispose();
-                _offsetAnimation = null;
-              }
-            })
-            ..forward();
+          _offsetAnimation =
+              AnimationController(
+                  vsync: listState,
+                  duration: kAnimationDuration,
+                )
+                ..addListener(rebuild)
+                ..addStatusListener((AnimationStatus status) {
+                  if (status == AnimationStatus.completed) {
+                    widget.updateItemPosition?.call();
+                    _startOffset = _targetOffset;
+                    _offsetAnimation!.dispose();
+                    _offsetAnimation = null;
+                  }
+                })
+                ..forward();
         } else {
           _startOffset = offsetDiff;
           _offsetAnimation!.forward(from: 0.0);
@@ -116,8 +114,7 @@ class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent>
 
   Offset get offset {
     if (_offsetAnimation != null) {
-      final Offset offset =
-          Offset.lerp(_startOffset, _targetOffset, _offsetAnimation!.value)!;
+      final Offset offset = Offset.lerp(_startOffset, _targetOffset, _offsetAnimation!.value)!;
       return offset;
     }
     return _targetOffset;
@@ -131,19 +128,20 @@ class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent>
 
     if (animate) {
       if (_offsetAnimation == null) {
-        _offsetAnimation = AnimationController(
-          vsync: listState,
-          duration: const Duration(milliseconds: 250),
-        )
-          ..addListener(rebuild)
-          ..addStatusListener((AnimationStatus status) {
-            if (status == AnimationStatus.completed) {
-              _startOffset = _targetOffset;
-              _offsetAnimation!.dispose();
-              _offsetAnimation = null;
-            }
-          })
-          ..forward();
+        _offsetAnimation =
+            AnimationController(
+                vsync: listState,
+                duration: const Duration(milliseconds: 250),
+              )
+              ..addListener(rebuild)
+              ..addStatusListener((AnimationStatus status) {
+                if (status == AnimationStatus.completed) {
+                  _startOffset = _targetOffset;
+                  _offsetAnimation!.dispose();
+                  _offsetAnimation = null;
+                }
+              })
+              ..forward();
       } else {
         _startOffset = offset;
         _offsetAnimation!.forward(from: 0.0);
@@ -175,9 +173,9 @@ class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent>
       maintainState: true,
       visible: visible && !_dragging,
       child: Transform.translate(
-          offset: offset,
-          child:
-              !_dragging ? widget.child : SizedBox.fromSize(size: _dragSize)),
+        offset: offset,
+        child: !_dragging ? widget.child : SizedBox.fromSize(size: _dragSize),
+      ),
     );
   }
 
@@ -199,8 +197,7 @@ class ReorderableAnimatedContentState extends State<ReorderableAnimatedContent>
 
   Rect targetGeometry() {
     final RenderBox itemRenderBox = context.findRenderObject()! as RenderBox;
-    final Offset itemPosition =
-        itemRenderBox.localToGlobal(Offset.zero) + _targetOffset;
+    final Offset itemPosition = itemRenderBox.localToGlobal(Offset.zero) + _targetOffset;
     return itemPosition & itemRenderBox.size;
   }
 
