@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'builder/reorderable_animated_list_base.dart';
-import 'builder/reorderable_animated_list_impl.dart';
 
 /// A Flutter AnimatedListView that animates insertion and removal of the item.
 ///
@@ -285,7 +284,7 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
 
   /// Creates a [AnimatedListView] that animates insertion and removal of the item.
   const AnimatedListView({
-    Key? key,
+    super.key,
     required this.items,
     required this.itemBuilder,
     this.enterTransition,
@@ -308,7 +307,7 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
     this.shrinkWrap = false,
     required this.isSameItem,
     this.enableSwap = true,
-  }) : super(key: key);
+  });
 
   /// The state from the closest instance of this class that encloses the given
   /// context.

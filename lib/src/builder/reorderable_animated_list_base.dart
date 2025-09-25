@@ -40,7 +40,7 @@ abstract class ReorderableAnimatedListBase<W extends Widget, E extends Object>
   final bool enableSwap;
 
   const ReorderableAnimatedListBase(
-      {Key? key,
+      {super.key,
       required this.items,
       this.itemBuilder,
       this.onReorder,
@@ -62,8 +62,7 @@ abstract class ReorderableAnimatedListBase<W extends Widget, E extends Object>
       this.enableSwap = true,
       required this.nonDraggableItems,
       required this.lockedItems})
-      : assert(itemBuilder != null),
-        super(key: key);
+      : assert(itemBuilder != null);
 }
 
 abstract class ReorderableAnimatedListBaseState<

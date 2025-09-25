@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+
 import 'builder/reorderable_animated_list_base.dart';
-import 'builder/reorderable_animated_list_impl.dart';
 
 /// A Flutter SliverAnimatedListView that animates insertion and removal of the item.
 ///
@@ -225,7 +225,7 @@ class SliverAnimatedListView<E extends Object> extends StatefulWidget {
 
   /// Creates a [SliverAnimatedListView] that animates insertion and removal of the item.
   const SliverAnimatedListView({
-    Key? key,
+    super.key,
     required this.items,
     required this.itemBuilder,
     this.enterTransition,
@@ -238,7 +238,7 @@ class SliverAnimatedListView<E extends Object> extends StatefulWidget {
     this.removeItemBuilder,
     required this.isSameItem,
     this.enableSwap = true,
-  }) : super(key: key);
+  });
 
   /// The state from the closest instance of this class that encloses the given
   /// context.
@@ -248,8 +248,7 @@ class SliverAnimatedListView<E extends Object> extends StatefulWidget {
   ///
   /// This method can be expensive (it walks the element tree).
   static SliverAnimatedListViewState of(BuildContext context) {
-    final SliverAnimatedListViewState? result =
-        context.findAncestorStateOfType<SliverAnimatedListViewState>();
+    final SliverAnimatedListViewState? result = context.findAncestorStateOfType<SliverAnimatedListViewState>();
     assert(() {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
@@ -258,8 +257,7 @@ class SliverAnimatedListView<E extends Object> extends StatefulWidget {
           ErrorDescription(
             'No SliverAnimatedListViewState ancestor could be found starting from the context that was passed to SliverAnimatedListViewState.of().',
           ),
-          ErrorHint(
-              'This can happen when the context provided is from the same StatefulWidget that '
+          ErrorHint('This can happen when the context provided is from the same StatefulWidget that '
               'built the SliverAnimatedListViewState. '),
           context.describeElement('The context used was'),
         ]);
@@ -287,8 +285,7 @@ class SliverAnimatedListView<E extends Object> extends StatefulWidget {
   State<SliverAnimatedListView<E>> createState() => SliverAnimatedListViewState();
 }
 
-class SliverAnimatedListViewState<E extends Object>
-    extends State<SliverAnimatedListView<E>> {
+class SliverAnimatedListViewState<E extends Object> extends State<SliverAnimatedListView<E>> {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(

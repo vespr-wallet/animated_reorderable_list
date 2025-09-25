@@ -10,11 +10,11 @@ class ReorderableGridDragStartListener extends StatelessWidget {
   /// This is most commonly used to wrap part of a grid item like a drag
   /// handle.
   const ReorderableGridDragStartListener({
-    Key? key,
+    super.key,
     required this.child,
     required this.index,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   /// The widget for which the application would like to respond to a tap and
   /// drag gesture by starting a reordering drag on a reorderable grid.
@@ -87,12 +87,12 @@ class ReorderableGridDelayedDragStartListener
   /// This is most commonly used to wrap an entire grid item in a reorderable
   /// grid.
   const ReorderableGridDelayedDragStartListener({
-    Key? key,
-    required Widget child,
-    required int index,
+    super.key,
+    required super.child,
+    required super.index,
     required this.dragStartDelay,
-    bool enabled = true,
-  }) : super(key: key, child: child, index: index, enabled: enabled);
+    super.enabled,
+  });
 
   @override
   MultiDragGestureRecognizer createRecognizer() {

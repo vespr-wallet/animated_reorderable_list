@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import '../../animated_reorderable_list.dart';
 import 'builder/reorderable_animated_list_base.dart';
-import 'builder/reorderable_animated_list_impl.dart';
 
 /// A Flutter AnimatedGridView that animates insertion and removal of the item.
 ///
@@ -288,7 +287,7 @@ class AnimatedGridView<E extends Object> extends StatefulWidget {
 
   /// Creates a [AnimatedGridView] that animates insertion and removal of the item.
   const AnimatedGridView(
-      {Key? key,
+      {super.key,
       required this.items,
       required this.itemBuilder,
       required this.sliverGridDelegate,
@@ -311,8 +310,7 @@ class AnimatedGridView<E extends Object> extends StatefulWidget {
       this.removeItemBuilder,
       this.shrinkWrap = false,
       required this.isSameItem,
-      this.enableSwap = true})
-      : super(key: key);
+      this.enableSwap = true});
 
   /// The state from the closest instance of this class that encloses the given
   /// context.
