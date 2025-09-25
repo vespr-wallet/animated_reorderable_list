@@ -8,3 +8,4 @@ export 'src/animated_reorderable_listview.dart';
 
 //Direct access to the sliver builder, circumventing the ScrollView layer
 export 'src/builder/reorderable_animated_list_impl.dart';
+export 'src/sliver_animated_listview.dart';

@@ -34,7 +34,7 @@ class ReorderableAnimatedBuilder<E> extends StatefulWidget {
   final List<int> lockedIndices;
 
   const ReorderableAnimatedBuilder(
-      {Key? key,
+      {super.key,
       required this.itemBuilder,
       required this.insertAnimationBuilder,
       required this.removeAnimationBuilder,
@@ -50,8 +50,7 @@ class ReorderableAnimatedBuilder<E> extends StatefulWidget {
       required this.dragStartDelay,
       required this.nonDraggableIndices,
       required this.lockedIndices})
-      : assert(initialCount >= 0),
-        super(key: key);
+      : assert(initialCount >= 0);
 
   @override
   State<ReorderableAnimatedBuilder> createState() =>

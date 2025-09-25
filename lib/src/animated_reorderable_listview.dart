@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:flutter/material.dart';
 import 'builder/reorderable_animated_list_base.dart';
-import 'builder/reorderable_animated_list_impl.dart';
 
 ///A [ListView] that enables users to interactively reorder items through dragging, with animated insertion and removal of items.
 ///
@@ -368,7 +367,7 @@ class AnimatedReorderableListView<E extends Object> extends StatefulWidget {
   /// Creates a [AnimatedReorderableListView] that enables users to interactively reorder items through dragging,
   /// with animated insertion and removal of items.
   const AnimatedReorderableListView({
-    Key? key,
+    super.key,
     required this.items,
     required this.itemBuilder,
     required this.onReorder,
@@ -400,7 +399,7 @@ class AnimatedReorderableListView<E extends Object> extends StatefulWidget {
     this.nonDraggableItems = const [],
     this.lockedItems = const [],
     this.enableSwap = true,
-  }) : super(key: key);
+  });
 
   /// The state from the closest instance of this class that encloses the given
   /// context.

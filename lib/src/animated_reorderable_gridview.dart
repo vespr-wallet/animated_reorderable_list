@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 
 import '../../animated_reorderable_list.dart';
 import 'builder/reorderable_animated_list_base.dart';
-import 'builder/reorderable_animated_list_impl.dart';
 
 /// @docImport 'animated_reorderable_listview';
 
@@ -350,7 +349,7 @@ class AnimatedReorderableGridView<E extends Object> extends StatefulWidget {
   /// Creates a [AnimatedReorderableGridView] that enables users to interactively reorder items through dragging,
   /// with animated insertion and removal of items.
   const AnimatedReorderableGridView(
-      {Key? key,
+      {super.key,
       required this.items,
       required this.itemBuilder,
       required this.sliverGridDelegate,
@@ -381,8 +380,7 @@ class AnimatedReorderableGridView<E extends Object> extends StatefulWidget {
       this.dragStartDelay = const Duration(milliseconds: 500),
       this.nonDraggableItems = const [],
       this.lockedItems = const [],
-      this.enableSwap = true})
-      : super(key: key);
+      this.enableSwap = true});
 
   /// The state from the closest instance of this class that encloses the given
   /// context.

@@ -8,13 +8,13 @@ class ReorderableAnimatedContent extends StatefulWidget {
   final CapturedThemes? capturedThemes;
 
   const ReorderableAnimatedContent({
-    Key? key,
+    super.key,
     required this.index,
     required this.transitionData,
     required this.child,
     this.updateItemPosition,
     required this.capturedThemes,
-  }) : super(key: key);
+  });
 
   @override
   State<ReorderableAnimatedContent> createState() =>

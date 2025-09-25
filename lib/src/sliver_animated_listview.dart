@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
+
 import 'builder/reorderable_animated_list_base.dart';
 
-/// A Flutter AnimatedListView that animates insertion and removal of the item.
+/// A Flutter SliverAnimatedListView that animates insertion and removal of the item.
 ///
 ///  ```dart
 ///  enterTransition: [FadeIn(), ScaleIn()],
@@ -14,8 +14,8 @@ import 'builder/reorderable_animated_list_base.dart';
 /// offset them or run them in sequence.
 ///
 /// /// All list items must have a key.
-class AnimatedListView<E extends Object> extends StatefulWidget {
-  /// The current list of items that this[AnimatedListView] should represent.
+class SliverAnimatedListView<E extends Object> extends StatefulWidget {
+  /// The current list of items that this[SliverAnimatedListView] should represent.
   final List<E> items;
 
   /// Called, as needed, to build list item widgets.
@@ -127,7 +127,7 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   ///
   /// **Example:**
   /// ```dart
-  /// AnimatedListView(
+  /// SliverAnimatedListView(
   ///   insertDuration: Duration(milliseconds: 500), // Default duration for item insertions.
   ///   enterTransition: [
   ///     FadeIn(duration: Duration(milliseconds: 300)), // Overrides the default for this effect.
@@ -154,7 +154,7 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   ///
   /// **Example:**
   /// ```dart
-  /// AnimatedListView(
+  /// SliverAnimatedListView(
   ///   removeDuration: Duration(milliseconds: 400), // Default duration for item removals.
   ///   exitTransition: [
   ///     FadeOut(duration: Duration(milliseconds: 200)), // Overrides the default for this effect.
@@ -165,33 +165,6 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   /// `removeDuration` is overridden by the duration specified in the `exitTransition`.
   final Duration? removeDuration;
 
-  /// The axis along which the scroll view scrolls.
-  ///
-  /// Defaults to [Axis.vertical].
-  final Axis scrollDirection;
-
-  /// {@macro flutter.widgets.scroll_view.reverse}
-  final bool reverse;
-
-  /// [ScrollController] to get the current scroll position.
-  ///
-  ///  Must be null if [primary] is true.
-  ///
-  ///  It can be used to read the current
-  //   scroll position (see [ScrollController.offset]), or change it (see
-  //   [ScrollController.animateTo]).
-  final ScrollController? controller;
-
-  /// When this is true, the scroll view is scrollable even if it does not have
-  /// sufficient content to actually scroll. Otherwise, by default the user can
-  /// only scroll the view if it has sufficient content. See [physics].
-  ///
-  /// Cannot be true while a [ScrollController] is provided to `controller`,
-  /// only one ScrollController can be associated with a ScrollView.
-  ///
-  /// Defaults to null.
-  final bool? primary;
-
   /// {@template flutter.widgets.reorderable_list.padding}
   /// The amount of space by which to inset the list contents.
   ///
@@ -199,39 +172,10 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
 
-  /// How the scroll view should respond to user input.
+  /// The axis along which the scroll view scrolls.
   ///
-  /// For example, determines how the scroll view continues to animate after the
-  /// user stops dragging the scroll view.
-  ///
-  /// Defaults to matching platform conventions. Furthermore, if [primary] is
-  /// false, then the user cannot scroll if there is insufficient content to
-  /// scroll, while if [primary] is true, they can always attempt to scroll.
-  final ScrollPhysics? physics;
-
-  /// [ScrollBehavior]s also provide [ScrollPhysics]. If an explicit
-  /// [ScrollPhysics] is provided in [physics], it will take precedence,
-  /// followed by [scrollBehavior], and then the inherited ancestor
-  /// [ScrollBehavior].
-  final ScrollBehavior? scrollBehavior;
-
-  /// Creates a ScrollView that creates custom scroll effects using slivers.
-  /// See the ScrollView constructor for more details on these arguments.
-  final String? restorationId;
-
-  /// [ScrollViewKeyboardDismissBehavior] the defines how this [ScrollView] will
-  /// dismiss the keyboard automatically.
-  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
-
-  /// Defaults to [Clip.hardEdge].
-  ///
-  /// Creates a ScrollView that creates custom scroll effects using slivers.
-  /// See the ScrollView constructor for more details on these arguments.
-  final Clip clipBehavior;
-
-  /// Creates a ScrollView that creates custom scroll effects using slivers.
-  /// See the ScrollView constructor for more details on these arguments.
-  final DragStartBehavior dragStartBehavior;
+  /// Defaults to [Axis.vertical].
+  final Axis scrollDirection;
 
   /// A custom builder that is for adding items with animations.
   ///
@@ -248,9 +192,6 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   /// `animation` is an [Animation] that should be used to animate an exit
   /// transition for the widget that is built.
   final AnimatedWidgetBuilder? removeItemBuilder;
-
-  /// Whether the extent of the scroll view in the scrollDirection should be determined by the contents being viewed.
-  final bool shrinkWrap;
 
   /// A callback function to determine if two items in the list are considered the same.
   ///
@@ -282,8 +223,8 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   /// Defaults to true.
   final bool enableSwap;
 
-  /// Creates a [AnimatedListView] that animates insertion and removal of the item.
-  const AnimatedListView({
+  /// Creates a [SliverAnimatedListView] that animates insertion and removal of the item.
+  const SliverAnimatedListView({
     super.key,
     required this.items,
     required this.itemBuilder,
@@ -293,18 +234,8 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
     this.removeDuration,
     this.scrollDirection = Axis.vertical,
     this.padding,
-    this.reverse = false,
-    this.controller,
-    this.primary,
-    this.physics,
-    this.scrollBehavior,
-    this.restorationId,
-    this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
-    this.dragStartBehavior = DragStartBehavior.start,
-    this.clipBehavior = Clip.hardEdge,
     this.insertItemBuilder,
     this.removeItemBuilder,
-    this.shrinkWrap = false,
     required this.isSameItem,
     this.enableSwap = true,
   });
@@ -312,24 +243,22 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   /// The state from the closest instance of this class that encloses the given
   /// context.
   ///
-  /// If no [AnimatedListViewState] surrounds the given context, then this function
+  /// If no [SliverAnimatedListViewState] surrounds the given context, then this function
   /// will assert in debug mode and throw an exception in release mode.
   ///
   /// This method can be expensive (it walks the element tree).
-  static AnimatedListViewState of(BuildContext context) {
-    final AnimatedListViewState? result =
-        context.findAncestorStateOfType<AnimatedListViewState>();
+  static SliverAnimatedListViewState of(BuildContext context) {
+    final SliverAnimatedListViewState? result = context.findAncestorStateOfType<SliverAnimatedListViewState>();
     assert(() {
       if (result == null) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
-              'AnimatedListViewState.of() called with a context that does not contain a AnimatedListViewState.'),
+              'SliverAnimatedListViewState.of() called with a context that does not contain a SliverAnimatedListViewState.'),
           ErrorDescription(
-            'No AnimatedListViewState ancestor could be found starting from the context that was passed to AnimatedListViewState.of().',
+            'No SliverAnimatedListViewState ancestor could be found starting from the context that was passed to SliverAnimatedListViewState.of().',
           ),
-          ErrorHint(
-              'This can happen when the context provided is from the same StatefulWidget that '
-              'built the AnimatedListViewState. '),
+          ErrorHint('This can happen when the context provided is from the same StatefulWidget that '
+              'built the SliverAnimatedListViewState. '),
           context.describeElement('The context used was'),
         ]);
       }
@@ -341,54 +270,39 @@ class AnimatedListView<E extends Object> extends StatefulWidget {
   /// The state from the closest instance of this class that encloses the given
   /// context.
   ///
-  /// This method is typically used by [AnimatedListViewState] item widgets that insert
+  /// This method is typically used by [SliverAnimatedListViewState] item widgets that insert
   /// or remove items in response to user input.
   ///
-  /// If no [AnimatedListViewState] surrounds the context given, then this function will
+  /// If no [SliverAnimatedListViewState] surrounds the context given, then this function will
   /// return null.
   ///
   /// This method can be expensive (it walks the element tree).
-  static AnimatedListViewState? maybeOf(BuildContext context) {
-    return context.findAncestorStateOfType<AnimatedListViewState>();
+  static SliverAnimatedListViewState? maybeOf(BuildContext context) {
+    return context.findAncestorStateOfType<SliverAnimatedListViewState>();
   }
 
   @override
-  State<AnimatedListView<E>> createState() => AnimatedListViewState();
+  State<SliverAnimatedListView<E>> createState() => SliverAnimatedListViewState();
 }
 
-class AnimatedListViewState<E extends Object>
-    extends State<AnimatedListView<E>> {
+class SliverAnimatedListViewState<E extends Object> extends State<SliverAnimatedListView<E>> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
+    return SliverPadding(
+      padding: widget.padding ?? EdgeInsets.zero,
+      sliver: ReorderableAnimatedListImpl(
+        items: widget.items,
+        itemBuilder: widget.itemBuilder,
+        enterTransition: widget.enterTransition,
+        exitTransition: widget.exitTransition,
+        insertDuration: widget.insertDuration,
+        removeDuration: widget.removeDuration,
         scrollDirection: widget.scrollDirection,
-        reverse: widget.reverse,
-        controller: widget.controller,
-        primary: widget.primary,
-        physics: widget.physics,
-        scrollBehavior: widget.scrollBehavior,
-        restorationId: widget.restorationId,
-        keyboardDismissBehavior: widget.keyboardDismissBehavior,
-        dragStartBehavior: widget.dragStartBehavior,
-        clipBehavior: widget.clipBehavior,
-        shrinkWrap: widget.shrinkWrap,
-        slivers: [
-          SliverPadding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            sliver: ReorderableAnimatedListImpl(
-              items: widget.items,
-              itemBuilder: widget.itemBuilder,
-              enterTransition: widget.enterTransition,
-              exitTransition: widget.exitTransition,
-              insertDuration: widget.insertDuration,
-              removeDuration: widget.removeDuration,
-              scrollDirection: widget.scrollDirection,
-              insertItemBuilder: widget.insertItemBuilder,
-              removeItemBuilder: widget.removeItemBuilder,
-              isSameItem: widget.isSameItem,
-              enableSwap: widget.enableSwap,
-            ),
-          ),
-        ]);
+        insertItemBuilder: widget.insertItemBuilder,
+        removeItemBuilder: widget.removeItemBuilder,
+        isSameItem: widget.isSameItem,
+        enableSwap: widget.enableSwap,
+      ),
+    );
   }
 }
