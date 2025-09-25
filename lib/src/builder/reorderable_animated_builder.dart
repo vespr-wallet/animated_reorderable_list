@@ -567,19 +567,20 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
       childrenMap.clear();
       childrenMap.addAll(updatedChildrenMap);
       sizeController.forward().then((value) {
+        if (!mounted) return;
         controller.forward().then<void>((_) {
-          _removeActiveItemAt(_incomingItems, incomingItem.itemIndex)!
-              .controller!
-              .dispose();
+          if (!mounted) return;
+          final removedItem = _removeActiveItemAt(_incomingItems, incomingItem.itemIndex);
+          removedItem?.controller?.dispose();
         });
       });
     } else {
       childrenMap[itemIndex] = ItemTransitionData();
       sizeController.value = kAlwaysCompleteAnimation.value;
       controller.forward().then<void>((_) {
-        _removeActiveItemAt(_incomingItems, incomingItem.itemIndex)!
-            .controller!
-            .dispose();
+        if (!mounted) return;
+        final removedItem = _removeActiveItemAt(_incomingItems, incomingItem.itemIndex);
+        removedItem?.controller?.dispose();
       });
     }
     setState(() {
@@ -616,16 +617,18 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
         ..sort();
 
       controller.reverse().then<void>((void value) {
+        if (!mounted) return;
         if (controller.status == AnimationStatus.dismissed) {
           if (childrenMap.containsKey(index)) {
             childrenMap.update(
                 index, (value) => value.copyWith(visible: false));
           }
           sizeController.reverse(from: 1.0).then((value) {
+            if (!mounted) return;
             final removedItem =
-                _removeActiveItemAt(_outgoingItems, outgoingItem.itemIndex)!;
-            removedItem.controller!.dispose();
-            removedItem.sizeAnimation!.dispose();
+                _removeActiveItemAt(_outgoingItems, outgoingItem.itemIndex);
+            removedItem?.controller?.dispose();
+            removedItem?.sizeAnimation?.dispose();
 
             // Decrement the incoming and outgoing item indices to account
             // for the removal.
