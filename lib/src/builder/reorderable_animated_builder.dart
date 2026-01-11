@@ -665,8 +665,9 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
     if (item == null) return Offset.zero;
 
     final renderObject = item.context.findRenderObject();
-    if (renderObject == null || renderObject is! RenderBox) return Offset.zero;
-    if (!renderObject.attached) return Offset.zero;
+    if (renderObject is! RenderBox || !renderObject.attached) {
+      return Offset.zero;
+    }
 
     return renderObject.localToGlobal(Offset.zero);
   }
@@ -780,15 +781,6 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
       // This gracefully handles out-of-bounds indices during animation transitions.
       return child;
     }
-
-    assert(() {
-      if (child.key == null) {
-        throw FlutterError(
-          'Every item of AnimatedReorderableList must have a unique key.',
-        );
-      }
-      return true;
-    }());
 
     final Key itemGlobalKey = _MotionBuilderItemGlobalKey(childKey, this);
     final Widget builder = _insertItemBuilder(incomingItem, child);
