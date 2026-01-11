@@ -661,9 +661,14 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
   }
 
   Offset _itemOffsetAt(int index) {
-    final itemRenderBox = _items[index]?.context.findRenderObject() as RenderBox?;
-    if (itemRenderBox == null) return Offset.zero;
-    return itemRenderBox.localToGlobal(Offset.zero);
+    final item = _items[index];
+    if (item == null) return Offset.zero;
+
+    final renderObject = item.context.findRenderObject();
+    if (renderObject == null || renderObject is! RenderBox) return Offset.zero;
+    if (!renderObject.attached) return Offset.zero;
+
+    return renderObject.localToGlobal(Offset.zero);
   }
 
   Offset _itemStartOffsetAt(int index) {
@@ -766,6 +771,16 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
         ? reorderableItemBuilder(context, itemIndex)
         : widget.itemBuilder(context, itemIndex);
 
+    // Handle case where itemBuilder returns a widget without a key.
+    // This can happen when the consumer's list changes during animation
+    // and the index becomes out of bounds for their data.
+    final Key? childKey = child.key;
+    if (childKey == null) {
+      // Return the child without animation wrapper when key is missing.
+      // This gracefully handles out-of-bounds indices during animation transitions.
+      return child;
+    }
+
     assert(() {
       if (child.key == null) {
         throw FlutterError(
@@ -775,7 +790,7 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
       return true;
     }());
 
-    final Key itemGlobalKey = _MotionBuilderItemGlobalKey(child.key!, this);
+    final Key itemGlobalKey = _MotionBuilderItemGlobalKey(childKey, this);
     final Widget builder = _insertItemBuilder(incomingItem, child);
 
     final ItemTransitionData? transitionData = childrenMap[index];
@@ -787,6 +802,8 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
       key: itemGlobalKey,
       transitionData: transitionData,
       updateItemPosition: () {
+        // Safely update position - item may no longer exist during animation
+        if (!childrenMap.containsKey(index)) return;
         final itemOffset = _itemOffsetAt(index);
         childrenMap[index] = ItemTransitionData(
           startOffset: itemOffset,
