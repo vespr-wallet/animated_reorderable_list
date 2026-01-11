@@ -1,3 +1,12 @@
+## 1.3.2
+
+### Bug Fixes
+
+- Fix `TypeError: Null check operator used on a null value` crash during animation transitions
+- Handle case where `itemBuilder` returns a widget without a key (graceful fallback)
+- Add proper null/attached checks in `_itemOffsetAt` to prevent crashes when items are removed during animation
+- Guard `updateItemPosition` callback against stale indices in `childrenMap`
+
 ## 1.3.0
 
 ###  Performance Improvement
