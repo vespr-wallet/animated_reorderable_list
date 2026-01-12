@@ -101,11 +101,13 @@ class _HomePageState extends State<HomePage> {
                         items: list,
                         itemBuilder: (BuildContext context, int index) {
                           final user = list[index];
-                          return ItemCard(
+                          return KeyedWidget(
                             key: ValueKey(user.id),
-                            id: user.id,
-                            dragEnabled: !nonDraggableItems.contains(user),
-                            isLocked: lockedItems.contains(user),
+                            child: ItemCard(
+                              id: user.id,
+                              dragEnabled: !nonDraggableItems.contains(user),
+                              isLocked: lockedItems.contains(user),
+                            ),
                           );
                         },
                         sliverGridDelegate:
@@ -168,11 +170,13 @@ class _HomePageState extends State<HomePage> {
                         items: list,
                         itemBuilder: (BuildContext context, int index) {
                           final user = list[index];
-                          return ItemTile(
+                          return KeyedWidget(
                             key: ValueKey(user.id),
-                            id: user.id,
-                            dragEnabled: !nonDraggableItems.contains(user),
-                            isLocked: lockedItems.contains(user),
+                            child: ItemTile(
+                              id: user.id,
+                              dragEnabled: !nonDraggableItems.contains(user),
+                              isLocked: lockedItems.contains(user),
+                            ),
                           );
                         },
                         enterTransition: animations,

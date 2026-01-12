@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import '../component/sliver_constraints_capture.dart';
 import '../component/drag_listener.dart';
 import '../model/item_transition_data.dart';
+import '../model/keyed_widget.dart';
 import 'reorderable_animated_list_base.dart';
 
 part '../component/drag_item.dart';
@@ -661,9 +662,15 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
   }
 
   Offset _itemOffsetAt(int index) {
-    final itemRenderBox = _items[index]?.context.findRenderObject() as RenderBox?;
-    if (itemRenderBox == null) return Offset.zero;
-    return itemRenderBox.localToGlobal(Offset.zero);
+    final item = _items[index];
+    if (item == null) return Offset.zero;
+
+    final renderObject = item.context.findRenderObject();
+    if (renderObject is! RenderBox || !renderObject.attached) {
+      return Offset.zero;
+    }
+
+    return renderObject.localToGlobal(Offset.zero);
   }
 
   Offset _itemStartOffsetAt(int index) {
@@ -762,20 +769,13 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
 
     final itemIndex = _itemIndexToIndex(index);
 
-    final Widget child = _dragEnabled(itemIndex)
+    final KeyedWidget child = _dragEnabled(itemIndex)
         ? reorderableItemBuilder(context, itemIndex)
         : widget.itemBuilder(context, itemIndex);
 
-    assert(() {
-      if (child.key == null) {
-        throw FlutterError(
-          'Every item of AnimatedReorderableList must have a unique key.',
-        );
-      }
-      return true;
-    }());
-
-    final Key itemGlobalKey = _MotionBuilderItemGlobalKey(child.key!, this);
+    // KeyedWidget guarantees the key is non-null at runtime
+    final Key childKey = child.key;
+    final Key itemGlobalKey = _MotionBuilderItemGlobalKey(childKey, this);
     final Widget builder = _insertItemBuilder(incomingItem, child);
 
     final ItemTransitionData? transitionData = childrenMap[index];
@@ -787,6 +787,8 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
       key: itemGlobalKey,
       transitionData: transitionData,
       updateItemPosition: () {
+        // Safely update position - item may no longer exist during animation
+        if (!childrenMap.containsKey(index)) return;
         final itemOffset = _itemOffsetAt(index);
         childrenMap[index] = ItemTransitionData(
           startOffset: itemOffset,
@@ -804,19 +806,11 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
     return SliverChildBuilderDelegate(_itemBuilder, childCount: _itemsCount);
   }
 
-  Widget reorderableItemBuilder(BuildContext context, int index) {
-    final Widget item = widget.itemBuilder(context, index);
+  KeyedWidget reorderableItemBuilder(BuildContext context, int index) {
+    final KeyedWidget item = widget.itemBuilder(context, index);
     final Widget itemWithSemantics = _wrapWithSemantics(item, index);
 
-    assert(() {
-      if (item.key == null) {
-        throw FlutterError(
-          'Every item of AnimatedReorderableList must have a key.',
-        );
-      }
-      return true;
-    }());
-    final Key itemGlobalKey = _MotionBuilderItemGlobalKey(item.key!, this);
+    final Key itemGlobalKey = _MotionBuilderItemGlobalKey(item.key, this);
     if (widget.buildDefaultDragHandles) {
       switch (Theme.of(context).platform) {
         case TargetPlatform.linux:
@@ -824,65 +818,73 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
         case TargetPlatform.windows:
           switch (widget.scrollDirection) {
             case Axis.horizontal:
-              return Stack(
+              return KeyedWidget(
                 key: itemGlobalKey,
-                children: <Widget>[
-                  itemWithSemantics,
-                  Positioned.directional(
-                    textDirection: Directionality.of(context),
-                    start: 0,
-                    end: 0,
-                    bottom: 8,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ReorderableGridDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
+                child: Stack(
+                  children: <Widget>[
+                    itemWithSemantics,
+                    Positioned.directional(
+                      textDirection: Directionality.of(context),
+                      start: 0,
+                      end: 0,
+                      bottom: 8,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: ReorderableGridDragStartListener(
+                          index: index,
+                          child: const Icon(Icons.drag_handle),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             case Axis.vertical:
-              return Stack(
+              return KeyedWidget(
                 key: itemGlobalKey,
-                children: <Widget>[
-                  itemWithSemantics,
-                  Positioned.directional(
-                    textDirection: Directionality.of(context),
-                    top: 0,
-                    bottom: 0,
-                    end: 8,
-                    child: Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: ReorderableGridDragStartListener(
-                        index: index,
-                        child: const Icon(Icons.drag_handle),
+                child: Stack(
+                  children: <Widget>[
+                    itemWithSemantics,
+                    Positioned.directional(
+                      textDirection: Directionality.of(context),
+                      top: 0,
+                      bottom: 0,
+                      end: 8,
+                      child: Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: ReorderableGridDragStartListener(
+                          index: index,
+                          child: const Icon(Icons.drag_handle),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
           }
         case TargetPlatform.android:
         case TargetPlatform.fuchsia:
         case TargetPlatform.iOS:
-          return ReorderableGridDelayedDragStartListener(
-            dragStartDelay: widget.dragStartDelay,
+          return KeyedWidget(
             key: itemGlobalKey,
-            index: index,
-            child: item,
+            child: ReorderableGridDelayedDragStartListener(
+              dragStartDelay: widget.dragStartDelay,
+              index: index,
+              child: item,
+            ),
           );
       }
     }
 
     const bool enable = true;
-    return ReorderableGridDelayedDragStartListener(
-      dragStartDelay: widget.dragStartDelay,
+    return KeyedWidget(
       key: itemGlobalKey,
-      index: index,
-      enabled: enable,
-      child: itemWithSemantics,
+      child: ReorderableGridDelayedDragStartListener(
+        dragStartDelay: widget.dragStartDelay,
+        index: index,
+        enabled: enable,
+        child: itemWithSemantics,
+      ),
     );
   }
 
