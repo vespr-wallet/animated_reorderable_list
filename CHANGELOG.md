@@ -1,18 +1,20 @@
 ## 2.0.0
 
 ## BREAKING CHANGE
-- `itemBuilder` now requires a `KeyedWidget` return which guarantees a key is assigned. 
+
+- `itemBuilder` now requires a `KeyedWidget` return which guarantees a key is assigned.
 
 ### Bug Fixes
 
 - Fix `TypeError: Null check operator used on a null value` crash during animation transitions
-- New change to `itemBuilder` prevets issues caused by widgets without a key (which cannot work with a reorderable list)
+- New change to `itemBuilder` prevents issues caused by widgets without a key (which cannot work with a reorderable list)
 - Add proper null/attached checks in `_itemOffsetAt` to prevent crashes when items are removed during animation
 - Guard `updateItemPosition` callback against stale indices in `childrenMap`
 
 ## 1.3.0
 
-###  Performance Improvement
+### Performance Improvement
+
 - Reduced excessive rebuilds in GridView during scrolling
 
 ## 1.2.0
@@ -119,8 +121,3 @@
 ### Enhancements
 
 - Add support of Drag Handler for `TargetPlatformVariant.desktop`
-
-
-
-
-
