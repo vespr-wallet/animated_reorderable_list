@@ -772,16 +772,8 @@ class ReorderableAnimatedBuilderState extends State<ReorderableAnimatedBuilder>
         ? reorderableItemBuilder(context, itemIndex)
         : widget.itemBuilder(context, itemIndex);
 
-    // Handle case where itemBuilder returns a widget without a key.
-    // This can happen when the consumer's list changes during animation
-    // and the index becomes out of bounds for their data.
-    final Key? childKey = child.key;
-    if (childKey == null) {
-      // Return the child without animation wrapper when key is missing.
-      // This gracefully handles out-of-bounds indices during animation transitions.
-      return child;
-    }
-
+    // KeyedWidget guarantees the key is non-null at runtime
+    final Key childKey = child.key!;
     final Key itemGlobalKey = _MotionBuilderItemGlobalKey(childKey, this);
     final Widget builder = _insertItemBuilder(incomingItem, child);
 

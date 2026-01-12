@@ -4,7 +4,7 @@ import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:flutter/material.dart';
 import 'reorderable_animated_builder.dart';
 
-typedef ItemBuilder<W extends Widget, E> = Widget Function(BuildContext context, int index);
+typedef ItemBuilder<W extends Widget, E> = KeyedWidget Function(BuildContext context, int index);
 
 typedef AnimatedWidgetBuilder<W extends Widget, E> = Widget Function(Widget child, Animation<double> animation);
 
