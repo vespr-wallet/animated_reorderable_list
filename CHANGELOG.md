@@ -1,9 +1,12 @@
-## 1.3.2
+## 2.0.0
+
+## BREAKING CHANGE
+- `itemBuilder` now requires a `KeyedWidget` return which guarantees a key is assigned. 
 
 ### Bug Fixes
 
 - Fix `TypeError: Null check operator used on a null value` crash during animation transitions
-- Handle case where `itemBuilder` returns a widget without a key (graceful fallback)
+- New change to `itemBuilder` prevets issues caused by widgets without a key (which cannot work with a reorderable list)
 - Add proper null/attached checks in `_itemOffsetAt` to prevent crashes when items are removed during animation
 - Guard `updateItemPosition` callback against stale indices in `childrenMap`
 
