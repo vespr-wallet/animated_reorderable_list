@@ -1,3 +1,7 @@
+## Unreleased
+
+- Tooling: removed the upstream `publish.yml` workflow, which published to pub.dev on any `v*` tag push, and set `publish_to: none`. This fork is consumed as a git dependency and must never be published.
+
 ## 2.0.0
 
 VESPR fork of [canopas/animated_reorderable_list](https://github.com/canopas/animated_reorderable_list) 1.3.0. Version 2.0.0 isn't an upstream release.
