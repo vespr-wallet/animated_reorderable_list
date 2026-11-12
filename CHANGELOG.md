@@ -1,8 +1,14 @@
 ## 2.0.0
 
+VESPR fork of [canopas/animated_reorderable_list](https://github.com/canopas/animated_reorderable_list) 1.3.0. Version 2.0.0 isn't an upstream release.
+
 ## BREAKING CHANGE
 
 - `itemBuilder` now requires a `KeyedWidget` return which guarantees a key is assigned.
+
+### Features
+
+- Sliver support via `SliverAnimatedListView`.
 
 ### Bug Fixes
 
@@ -10,6 +16,7 @@
 - New change to `itemBuilder` prevents issues caused by widgets without a key (which cannot work with a reorderable list)
 - Add proper null/attached checks in `_itemOffsetAt` to prevent crashes when items are removed during animation
 - Guard `updateItemPosition` callback against stale indices in `childrenMap`
+- Check `mounted` before using `AnimationController`s in async callbacks, so disposing the widget during an animation no longer throws
 
 ## 1.3.0
 
