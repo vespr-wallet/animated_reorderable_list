@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Tooling: removed the upstream `publish.yml` workflow, which published to pub.dev on any `v*` tag push, and set `publish_to: none`. This fork is consumed as a git dependency and must never be published.
+- Tooling: CI (`pull_request.yml`) uses `actions/checkout@v7` (was v3, which ran on the retired Node 16 runtime) and pins Flutter 3.50.0 through `subosito/flutter-action`'s `flutter-version` input. The old `version: 3.3.7` input was ignored, so CI silently ran the latest stable.
 
 ## 2.0.0
 
