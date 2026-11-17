@@ -6,7 +6,7 @@ import 'package:example/utils/animation_provider.dart';
 import 'package:example/utils/extension.dart';
 import 'package:example/utils/item_card.dart';
 import 'package:example/utils/item_tile.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'model/user_model.dart';
 

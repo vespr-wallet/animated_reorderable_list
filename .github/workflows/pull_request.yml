@@ -21,8 +21,9 @@ jobs:
       - name: Verify Formatting
         run: dart format --output=none --set-exit-if-changed .
 
+      # --fatal-infos: lints are infos, and a bare `dart analyze` exits 0 on them
       - name: Analyze Project Source
-        run: dart analyze
+        run: dart analyze --fatal-infos
 
-
-
+      - name: Run tests
+        run: flutter test

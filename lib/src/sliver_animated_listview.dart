@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 
 import 'builder/reorderable_animated_list_base.dart';
