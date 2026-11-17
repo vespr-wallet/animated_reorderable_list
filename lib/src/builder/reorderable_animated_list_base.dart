@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
-import 'package:flutter/material.dart';
 import 'reorderable_animated_builder.dart';
 
 typedef ItemBuilder<W extends Widget, E> = KeyedWidget Function(BuildContext context, int index);

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import '../../animated_reorderable_list.dart';
 
 class SizeAnimation extends AnimationEffect<double> {
@@ -27,11 +27,17 @@ class SizeAnimation extends AnimationEffect<double> {
       begin: begin ?? beginValue,
       end: end ?? endValue,
     ).animate(animation);
+    final Axis resolvedAxis = axis ?? Axis.horizontal;
+    final double resolvedAxisAlignment = axisAlignment ?? alignmentValue;
     return Align(
       child: SizeTransition(
         sizeFactor: sizeFactor,
-        axis: axis ?? Axis.horizontal,
-        axisAlignment: axisAlignment ?? alignmentValue,
+        axis: resolvedAxis,
+        // Same placement as the deprecated `axisAlignment`, which SizeTransition maps the same way.
+        alignment: switch (resolvedAxis) {
+          Axis.horizontal => AlignmentDirectional(resolvedAxisAlignment, -1.0),
+          Axis.vertical => AlignmentDirectional(-1.0, resolvedAxisAlignment),
+        },
         child: child,
       ),
     );

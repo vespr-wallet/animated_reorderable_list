@@ -1,5 +1,8 @@
-## Unreleased
+## 2.1.0
 
+- **BREAKING** Requires Flutter 3.47 or newer (was 3.38.6). Imports `package:material_ui` instead of the deprecated `package:flutter/material.dart`, so `material_ui: ^1.8.0` is a new dependency. Files that only need widgets import `package:flutter/widgets.dart` instead of `cupertino.dart` or `material.dart`. The Dart SDK floor stays `>=3.9.0`.
+- `SizeAnimation` passes `SizeTransition.alignment` instead of the deprecated `axisAlignment`, mapped the way Flutter maps it, so items animate exactly as before. `SizeAnimation`'s own `axisAlignment` parameter is unchanged.
+- Tooling: CI fails on analyzer infos (`dart analyze --fatal-infos`) and runs `flutter test`. `.tool-versions` moves to Flutter 3.50.0.
 - Tooling: removed the upstream `publish.yml` workflow, which published to pub.dev on any `v*` tag push, and set `publish_to: none`. This fork is consumed as a git dependency and must never be published.
 - Tooling: CI (`pull_request.yml`) uses `actions/checkout@v7` (was v3, which ran on the retired Node 16 runtime) and pins Flutter 3.50.0 through `subosito/flutter-action`'s `flutter-version` input. The old `version: 3.3.7` input was ignored, so CI silently ran the latest stable.
 

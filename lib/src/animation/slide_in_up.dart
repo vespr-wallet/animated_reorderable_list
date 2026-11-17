@@ -1,5 +1,5 @@
 import 'package:animated_reorderable_list/src/animation/provider/animation_effect.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 class SlideInUp extends AnimationEffect<Offset> {
   static const Offset beginValue = Offset(0, -1);

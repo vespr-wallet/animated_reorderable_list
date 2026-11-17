@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 abstract class AnimationEffect<T> {
   /// The delay for this specific [AnimationEffect].

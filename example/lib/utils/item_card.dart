@@ -1,5 +1,5 @@
 import 'package:example/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ItemCard extends StatelessWidget {
   final int id;

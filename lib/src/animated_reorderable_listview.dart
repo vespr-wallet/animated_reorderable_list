@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:animated_reorderable_list/animated_reorderable_list.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'builder/reorderable_animated_list_base.dart';
 
 ///A [ListView] that enables users to interactively reorder items through dragging, with animated insertion and removal of items.

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_reorderable_list/src/animation/provider/animation_effect.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 class FlipInY extends AnimationEffect<double> {
   static const double beginValue = pi / 2;

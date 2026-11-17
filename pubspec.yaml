@@ -1,17 +1,18 @@
 name: animated_reorderable_list
 description: A Flutter Reorderable Animated List with simple implementation and smooth transition.
-version: 2.0.0
+version: 2.1.0
 # VESPR fork, consumed as a git dependency. Never publish it to pub.dev.
 publish_to: none
 repository: https://github.com/canopas/animated_reorderable_list
 
 environment:
   sdk: ">=3.9.0 <4.0.0"
-  flutter: ">=3.38.6 <4.0.0"
+  flutter: ">=3.47.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: ^1.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
