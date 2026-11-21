@@ -1,3 +1,7 @@
+## Unreleased
+
+- Tooling: Flutter 3.50.1 in `.tool-versions` and CI (`pull_request.yml`). The package and example `analysis_options.yaml` exclude build output, as Flutter 3.50 writes it on `pub get`. The minimum SDK constraints are unchanged.
+
 ## 2.1.0
 
 - **BREAKING** Requires Flutter 3.47 or newer (was 3.38.6). Imports `package:material_ui` instead of the deprecated `package:flutter/material.dart`, so `material_ui: ^1.8.0` is a new dependency. Files that only need widgets import `package:flutter/widgets.dart` instead of `cupertino.dart` or `material.dart`. The Dart SDK floor stays `>=3.9.0`.
