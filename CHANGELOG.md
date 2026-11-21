@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Tooling: Flutter 3.50.1 in `.tool-versions` and CI (`pull_request.yml`). The package and example `analysis_options.yaml` exclude build output, as Flutter 3.50 writes it on `pub get`. The minimum SDK constraints are unchanged.
+- Tooling: CI (`pull_request.yml`) reads the Flutter version from `.tool-versions` instead of a hard-coded `flutter-version`, so a Flutter bump only edits `.tool-versions`. The step fails if the `flutter` line is missing.
 - Tooling: the example app builds on Flutter 3.50. Android moves to AGP 9.3.1, Gradle 9.5.0, Kotlin 2.4.21 and Java 17 (Flutter 3.50 rejects AGP below 9.1.1), and the iOS project takes the migrations Flutter applies on build (UIScene lifecycle). The library itself is unchanged.
 
 ## 2.1.0
