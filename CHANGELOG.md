@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Tooling: Flutter 3.50.1 in `.tool-versions` and CI (`pull_request.yml`). The package and example `analysis_options.yaml` exclude build output, as Flutter 3.50 writes it on `pub get`. The minimum SDK constraints are unchanged.
+- Tooling: CI (`pull_request.yml`) reads the Flutter version from `.tool-versions` instead of a hard-coded `flutter-version`, so a Flutter bump only edits `.tool-versions`. The step fails if the `flutter` line is missing.
 
 ## 2.1.0
 
